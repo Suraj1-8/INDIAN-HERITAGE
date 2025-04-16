@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture - DEKHOINDIA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="culture.css?v=1.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            height: 70px;
+        }
+
+        .navbar.scrolled {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .nav-links li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-container input {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 180px;
+        }
+
+        .search-container input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-container input:focus {
+            border-color: rgba(255, 255, 255, 0.5);
+            width: 200px;
+        }
+
+        .search-container button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .user-profile {
+            position: relative;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .user-profile i {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #2c3e50;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem;
+            display: none;
+            min-width: 150px;
+        }
+
+        .user-profile:hover .profile-dropdown {
+            display: block;
+        }
+
+        .profile-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .profile-dropdown a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #2c3e50;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                height: auto;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 0.8rem;
+                text-align: center;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .search-container.active {
+                display: flex;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .search-container input {
+                width: 100%;
+            }
+
+            .search-container input:focus {
+                width: 100%;
+            }
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .slide-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 2;
+        }
+
+        .slide-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 3;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .culture-info h3 a {
+            color: #2c3e50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .culture-info h3 a:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <h1>DEKHOINDIA</h1>
+            </div>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="heritage.html">Heritage</a></li>
+                <li><a href="culture.html" class="active">Culture</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li id="loginNav"><a href="login.php">Login</a></li>
+                <li id="profileNav" class="user-profile" style="display:none;">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name" id="profileName"></span>
+                    <div class="profile-dropdown">
+                        <a href="profile.php"><i class="fas fa-user"></i> Profile</a>
+                        <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by state...">
+                <button id="searchButton"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');">
+                <div class="slide-overlay">
+                    <div class="slide-content">
+                        <h2 class="fade-in">Indian Culture</h2>
+                        <p class="fade-in">Experience the vibrant tapestry of Indian traditions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');">
+                <div class="slide-overlay">
+                    <div class="slide-content">
+                        <h2 class="fade-in">Festivals</h2>
+                        <p class="fade-in">Celebrate the colorful festivals of India</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');">
+                <div class="slide-overlay">
+                    <div class="slide-content">
+                        <h2 class="fade-in">Art & Music</h2>
+                        <p class="fade-in">Discover the rich artistic heritage of India</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');">
+                <div class="slide-overlay">
+                    <div class="slide-content">
+                        <h2 class="fade-in">Cuisine</h2>
+                        <p class="fade-in">Savor the diverse flavors of Indian cuisine</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');">
+                <div class="slide-overlay">
+                    <div class="slide-content">
+                        <h2 class="fade-in">Traditions</h2>
+                        <p class="fade-in">Experience the timeless traditions of India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <div class="slider-dot active"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+            <div class="slider-dot"></div>
+        </div>
+    </div>
+
+    <main>
+        <section class="culture-hero">
+            <div class="hero-content">
+                <h2>Indian Culture</h2>
+                <p>Experience the vibrant diversity of India's cultural traditions</p>
+            </div>
+        </section>
+
+        <!-- <section class="culture-categories">
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="dance">Dance Forms</button>
+                <button class="filter-btn" data-category="music">Music</button>
+                <button class="filter-btn" data-category="festivals">Festivals</button>
+                <button class="filter-btn" data-category="cuisine">Cuisine</button>
+            </div>
+        </section> -->
+
+        <section class="culture-grid">
+            <div class="culture-card" data-category="dance">
+                <img src="images/bharatanatyam.jpg" alt="Bharatanatyam">
+                <div class="culture-info">
+                    <h3><a href="https://en.wikipedia.org/wiki/Bharatanatyam" target="_blank">Bharatanatyam</a></h3>
+                    <p>Tamil Nadu</p>
+                    <div class="culture-details">
+                        <span class="category">Classical Dance</span>
+                        <span class="origin">Ancient</span>
+                    </div>
+                    <a href="https://www.google.com/search?q=bharatanatyam+dance+india" target="_blank" class="explore-btn">Explore</a>
+                </div>
+            </div>
+
+            <div class="culture-card" data-category="music">
+                <img src="images/carnatic music.jpg" alt="Carnatic Music">
+                <div class="culture-info">
+                    <h3><a href="https://en.wikipedia.org/wiki/Carnatic_music" target="_blank">Carnatic Music</a></h3>
+                    <p>South India</p>
+                    <div class="culture-details">
+                        <span class="category">Classical Music</span>
+                        <span class="origin">Ancient</span>
+                    </div>
+                    <a href="https://www.google.com/search?q=carnatic+music+india" target="_blank" class="explore-btn">Explore</a>
+                </div>
+            </div>
+
+            <div class="culture-card" data-category="festivals">
+                <img src="images/Diwali.webp" alt="Diwali">
+                <div class="culture-info">
+                    <h3><a href="https://en.wikipedia.org/wiki/Diwali" target="_blank">Diwali</a></h3>
+                    <p>Nationwide</p>
+                    <div class="culture-details">
+                        <span class="category">Festival of Lights</span>
+                        <span class="origin">Hindu Tradition</span>
+                    </div>
+                    <a href="https://www.google.com/search?q=diwali+festival+india" target="_blank" class="explore-btn">Explore</a>
+                </div>
+            </div>
+
+            <div class="culture-card" data-category="cuisine">
+                <img src="images/South Indian Cuisine.avif" alt="South Indian Cuisine">
+                <div class="culture-info">
+                    <h3><a href="https://en.wikipedia.org/wiki/South_Indian_cuisine" target="_blank">South Indian Cuisine</a></h3>
+                    <p>South India</p>
+                    <div class="culture-details">
+                        <span class="category">Regional Cuisine</span>
+                        <span class="origin">Traditional</span>
+                    </div>
+                    <a href="https://www.google.com/search?q=south+indian+cuisine+dishes" target="_blank" class="explore-btn">Explore</a>
+                </div>
+            </div>
+
+            <div class="culture-card" data-category="dance">
+                <img src="images/kathak.jpg" alt="Kathak">
+                <div class="culture-info">
+                    <h3><a href="https://en.wikipedia.org/wiki/Kathak" target="_blank">Kathak</a></h3>
+                    <p>North India</p>
+                    <div class="culture-details">
+                        <span class="category">Classical Dance</span>
+                        <span class="origin">Mughal Era</span>
+                    </div>
+                    <a href="https://www.google.com/search?q=kathak+dance+india" target="_blank" class="explore-btn">Explore</a>
+                </div>
+            </div>
+
+            <div class="culture-card" data-category="festivals">
+                <img src="images/holi.jpg" alt="Holi">
+                <div class="culture-info">
+                    <h3><a href="https://en.wikipedia.org/wiki/Holi" target="_blank">Holi</a></h3>
+                    <p>Nationwide</p>
+                    <div class="culture-details">
+                        <span class="category">Festival of Colors</span>
+                        <span class="origin">Hindu Tradition</span>
+                    </div>
+                    <a href="https://www.google.com/search?q=holi+festival+india" target="_blank" class="explore-btn">Explore</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cultural-events">
+            <h2>Upcoming Cultural Events</h2>
+            <div class="events-timeline">
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="day">15</span>
+                        <span class="month">Mar</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>Diwali Festival</h3>
+                        <p>Celebration of lights across India</p>
+                        <span class="event-location"><i class="fas fa-map-marker-alt"></i> Nationwide</span>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="day">20</span>
+                        <span class="month">Mar</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>Holi Festival</h3>
+                        <p>Festival of colors and joy</p>
+                        <span class="event-location"><i class="fas fa-map-marker-alt"></i> Nationwide</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Government Links</h3>
+                <ul class="footer-links">
+                    <li><a href="https://www.incredibleindia.org/" target="_blank">Incredible India</a></li>
+                    <li><a href="https://tourism.gov.in/" target="_blank">Ministry of Tourism</a></li>
+                    <li><a href="https://www.indiaculture.nic.in/" target="_blank">Ministry of Culture</a></li>
+                    <li><a href="https://asi.nic.in/" target="_blank">Archaeological Survey of India</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Heritage & Culture. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            let currentSlide = 0;
+            let slideInterval;
+
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                
+                const contents = slides[index].querySelectorAll('.slide-content > *');
+                contents.forEach(content => {
+                    content.classList.remove('fade-in');
+                    void content.offsetWidth;
+                    content.classList.add('fade-in');
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            function startSlider() {
+                slideInterval = setInterval(nextSlide, 3000);
+            }
+
+            function stopSlider() {
+                clearInterval(slideInterval);
+            }
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    showSlide(currentSlide);
+                    stopSlider();
+                    startSlider();
+                });
+            });
+
+            startSlider();
+
+            const sliderContainer = document.querySelector('.slider-container');
+            sliderContainer.addEventListener('mouseenter', stopSlider);
+            sliderContainer.addEventListener('mouseleave', startSlider);
+            
+            // Make explore buttons clickable
+            const exploreButtons = document.querySelectorAll('.explore-btn');
+            exploreButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    if (href) {
+                        window.open(href, '_blank');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
