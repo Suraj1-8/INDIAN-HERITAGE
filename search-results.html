@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - DEKHOINDIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4B2B',
+                        secondary: '#FF416C',
+                        dark: '#1A1A1A',
+                        darker: '#333333',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'shine': 'shine 3s infinite',
+                        'pulse': 'pulse 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-100%) rotate(30deg)' },
+                            '100%': { transform: 'translateX(100%) rotate(30deg)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-border {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #FF4B2B, #FF416C) border-box;
+        }
+        .results-hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .filter-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: #2E7D32;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: #2E7D32;
+        }
+
+        .results-container {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .result-section {
+            margin-bottom: 30px;
+        }
+
+        .result-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.5em;
+            padding-left: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .results-grid {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #4CAF50 #f0f0f0;
+        }
+
+        .results-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .results-grid::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        .results-grid::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+
+        .result-card {
+            flex: 0 0 300px;
+            margin-bottom: 0;
+            position: relative;
+            cursor: pointer;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .result-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            transform-origin: center;
+        }
+
+        .result-card:hover .result-image {
+            transform: scale(1.1);
+        }
+
+        .result-content {
+            padding: 20px;
+            position: relative;
+        }
+
+        .result-tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .back-to-search {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-to-search:hover {
+            transform: translateY(-5px);
+            background: #2E7D32;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            background: #f9f9f9;
+            border-radius: 15px;
+            margin: 50px auto;
+            max-width: 600px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .result-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .result-card:hover .result-overlay {
+            opacity: 1;
+        }
+
+        .view-details {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover .view-details {
+            transform: translateY(0);
+        }
+
+        .search-stats {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .share-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn:hover, .share-btn:hover {
+            background: #4CAF50;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .favorite-btn.active {
+            background: #ff4081;
+            color: white;
+        }
+
+        .view-options {
+            display: none;
+        }
+
+        .view-option-btn {
+            display: none;
+        }
+
+        .sort-options {
+            display: none;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+            padding: 20px;
+        }
+
+        .lightbox-prev {
+            left: 0;
+        }
+
+        .lightbox-next {
+            right: 0;
+        }
+
+        .result-card .favorite-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover .favorite-btn {
+            opacity: 1;
+        }
+
+        .favorite-btn.active {
+            color: #ff4081;
+        }
+
+        .result-card .rating {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .quick-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .result-card:hover .quick-preview {
+            opacity: 1;
+        }
+
+        .quick-preview h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .quick-preview p {
+            margin: 0;
+            font-size: 0.9em;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover .quick-preview h4,
+        .result-card:hover .quick-preview p {
+            transform: translateY(0);
+        }
+
+        .share-options {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .share-btn:hover .share-options {
+            display: block;
+        }
+
+        .share-option {
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .share-option:hover {
+            background: #f0f0f0;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .rating-stars i {
+            color: #FFD700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rating-stars i:hover {
+            transform: scale(1.2);
+        }
+
+        .quick-facts {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .quick-facts:hover {
+            background: rgba(0,0,0,0.9);
+        }
+
+        .quick-facts-popup {
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 250px;
+            display: none;
+            z-index: 100;
+        }
+
+        .quick-facts:hover .quick-facts-popup {
+            display: block;
+        }
+
+        .fact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .fact-item i {
+            color: #4CAF50;
+        }
+
+        .filter-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: white;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .filter-btn:hover::after {
+            transform: translateX(0);
+        }
+
+        .favorite-btn {
+            position: relative;
+        }
+
+        .favorite-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,64,129,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn.active::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .favorite-btn.active i {
+            animation: pulse 0.3s ease;
+        }
+
+        .search-container {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        #searchButton {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #searchButton:hover {
+            background: #2E7D32;
+            transform: translateY(-2px);
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .message.info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #90caf9;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-dark to-darker shadow-lg z-50 h-[70px] transition-all duration-300 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer transition-all duration-300 group hover:scale-105">
+                <i class="fas fa-landmark text-2xl text-secondary group-hover:rotate-12 transition-transform animate-floating"></i>
+                <h1 class="text-xl text-white font-bold m-0 gradient-text">DEKHOINDIA</h1>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-2 hover:scale-105">
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line1"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300" id="line2"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line3"></span>
+            </button>
+
+            <ul id="navLinks" class="hidden md:flex gap-6 list-none m-0 p-0 h-full items-center">
+                <li><a href="index.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Home</a></li>
+                <li><a href="heritage.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Heritage</a></li>
+                <li><a href="culture.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Culture</a></li>
+                <li><a href="about.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">About</a></li>
+                <li><a href="contact.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Contact</a></li>
+                <li id="loginNav"><a href="login.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Login</a></li>
+                <li id="profileNav" class="hidden">
+                    <div class="relative group">
+                        <button class="flex items-center text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            <span id="profileUsername"></span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block">
+                            <a href="profile.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                            <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- <div id="searchContainer" class="hidden md:flex items-center gap-2">
+                <input type="text" id="searchInput" placeholder="Search..." class="px-4 py-2 border border-secondary/20 rounded outline-none transition-all duration-300 bg-white/10 text-white w-44 placeholder:text-white/70 focus:border-secondary/50 focus:w-48 glass-effect hover:-translate-y-1">
+                <button id="searchButton" class="bg-secondary/20 text-white border-none px-4 py-2 rounded cursor-pointer transition-all duration-300 hover:bg-secondary/30 glass-effect hover:-translate-y-1">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div> -->
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-[70px] left-0 w-full bg-dark shadow-lg z-40 hidden transition-all duration-300 transform origin-top">
+        <div class="flex flex-col p-4 space-y-2">
+            <a href="index.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Home</a>
+            <a href="heritage.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Heritage</a>
+            <a href="culture.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Culture</a>
+            <a href="about.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">About</a>
+            <a href="contact.php" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Contact</a>
+            <a href="login.php" id="mobileLoginNav" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Login</a>
+            <div id="mobileProfileNav" class="hidden">
+                <div class="text-white px-4 py-2">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="mobileProfileUsername"></span>
+                </div>
+                <a href="profile.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Profile</a>
+                <a href="logout.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Logout</a>
+            </div>
+            <div class="flex items-center gap-2 mt-2">
+                <input type="text" placeholder="Search..." class="px-4 py-2 border border-secondary/20 rounded outline-none bg-white/10 text-white w-full placeholder:text-white/70">
+                <button class="bg-secondary/20 text-white border-none px-4 py-2 rounded cursor-pointer hover:bg-secondary/30">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-hero">
+        <h2 id="search-term">Search Results</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search heritage, culture, or traditions...">
+            <button id="searchButton">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="heritage">Heritage</button>
+            <button class="filter-btn" data-filter="culture">Culture</button>
+            <button class="filter-btn" data-filter="traditions">Traditions</button>
+        </div>
+    </div>
+
+    <div class="results-container" id="resultsContainer">
+        <div id="loading" class="loading" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Loading results...
+        </div>
+
+        <div class="search-stats" id="search-stats"></div>
+
+        <div id="heritage-results" class="result-section">
+            <h3>Heritage Places</h3>
+            <div class="results-grid" id="heritage-grid"></div>
+        </div>
+
+        <div id="culture-results" class="result-section">
+            <h3>Cultural Aspects</h3>
+            <div class="results-grid" id="culture-grid"></div>
+        </div>
+
+        <div id="traditions-results" class="result-section">
+            <h3>Traditions</h3>
+            <div class="results-grid" id="traditions-grid"></div>
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            <i class="fas fa-search" style="font-size: 3em; color: #ccc; margin-bottom: 20px;"></i>
+            <h3>No Results Found</h3>
+            <p>Try searching for a different state or check your spelling.</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-search">
+        <i class="fas fa-arrow-up"></i> Back to Top
+    </a>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img src="" alt="" id="lightbox-img">
+            <div class="lightbox-nav lightbox-prev">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="lightbox-nav lightbox-next">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include search.js -->
+    <script src="search.js"></script>
+
+    <script>
+    // Add this before the closing </body> tag
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('animate-fadeInDown');
+            
+            // Hamburger animation
+            line1.classList.toggle('rotate-45');
+            line1.classList.toggle('translate-y-1.5');
+            line2.classList.toggle('opacity-0');
+            line3.classList.toggle('-rotate-45');
+            line3.classList.toggle('-translate-y-1.5');
+        });
+
+        // Check login status
+        fetch('check_login.php')
+            .then(response => response.json())
+            .then(data => {
+                const loginNav = document.getElementById('loginNav');
+                const profileNav = document.getElementById('profileNav');
+                const profileUsername = document.getElementById('profileUsername');
+                const mobileLoginNav = document.getElementById('mobileLoginNav');
+                const mobileProfileNav = document.getElementById('mobileProfileNav');
+                const mobileProfileUsername = document.getElementById('mobileProfileUsername');
+                
+                if (data.loggedin) {
+                    loginNav.classList.add('hidden');
+                    profileNav.classList.remove('hidden');
+                    profileUsername.textContent = data.username;
+                    mobileLoginNav.classList.add('hidden');
+                    mobileProfileNav.classList.remove('hidden');
+                    mobileProfileUsername.textContent = data.username;
+                } else {
+                    loginNav.classList.remove('hidden');
+                    profileNav.classList.add('hidden');
+                    mobileLoginNav.classList.remove('hidden');
+                    mobileProfileNav.classList.add('hidden');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+    </script>
+    
+    <?php include 'includes/footer.php'; ?>
+</body>
+</html> 

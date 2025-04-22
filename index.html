@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEKHOINDIA - Heritage & Culture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4B2B',
+                        secondary: '#FF416C',
+                        dark: '#1A1A1A',
+                        darker: '#333333',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'shine': 'shine 3s infinite',
+                        'pulse': 'pulse 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-100%) rotate(30deg)' },
+                            '100%': { transform: 'translateX(100%) rotate(30deg)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-border {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #FF4B2B, #FF416C) border-box;
+        }
+        .hover-glow {
+            transition: all 0.3s ease;
+        }
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 75, 43, 0.5);
+        }
+        .text-gradient {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .hero-overlay {
+            background: linear-gradient(45deg, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+        }
+        .floating-card {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        /* New Styles */
+        .modern-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modern-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,75,43,0.1), rgba(255,65,108,0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .modern-card:hover::before {
+            opacity: 1;
+        }
+        .modern-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .gradient-button {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .gradient-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.4s ease;
+        }
+        .gradient-button:hover::before {
+            left: 100%;
+        }
+        .gradient-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,75,43,0.3);
+        }
+        .modern-nav {
+            backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .hero-text {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .stats-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+        }
+        .feature-icon {
+            background: linear-gradient(135deg, #FF4B2B, #FF416C);
+            box-shadow: 0 10px 20px rgba(255,75,43,0.3);
+        }
+        .destination-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .destination-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .event-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+        }
+        .newsletter-input {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .newsletter-input:focus {
+            background: rgba(255,255,255,0.1);
+            border-color: #FF4B2B;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-dark to-darker shadow-lg z-50 h-[70px] transition-all duration-300 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer transition-all duration-300 group hover:scale-105">
+                <i class="fas fa-landmark text-2xl text-secondary group-hover:rotate-12 transition-transform animate-floating"></i>
+                <h1 class="text-xl text-white font-bold m-0 gradient-text">DEKHOINDIA</h1>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-2 hover:scale-105">
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line1"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300" id="line2"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line3"></span>
+            </button>
+
+            <ul id="navLinks" class="hidden md:flex gap-6 list-none m-0 p-0 h-full items-center">
+                <li><a href="index.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Home</a></li>
+                <li><a href="heritage.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Heritage</a></li>
+                <li><a href="culture.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Culture</a></li>
+                <li><a href="about.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">About</a></li>
+                <li><a href="contact.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Contact</a></li>
+                <li><a href="search-results.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Search</a></li>
+                <li id="loginNav"><a href="login.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Login</a></li>
+                <li id="profileNav" class="hidden">
+                    <div class="relative group">
+                        <button class="flex items-center text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            <span id="profileUsername"></span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block">
+                            <a href="profile.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                            <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-[70px] left-0 w-full bg-dark shadow-lg z-40 hidden transition-all duration-300 transform origin-top">
+        <div class="flex flex-col p-4 space-y-2">
+            <a href="index.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Home</a>
+            <a href="heritage.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Heritage</a>
+            <a href="culture.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Culture</a>
+            <a href="about.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">About</a>
+            <a href="contact.php" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Contact</a>
+            <a href="login.php" id="mobileLoginNav" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Login</a>
+            <div id="mobileProfileNav" class="hidden">
+                <div class="text-white px-4 py-2">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="mobileProfileUsername"></span>
+                </div>
+                <a href="profile.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Profile</a>
+                <a href="logout.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Slider -->
+    <div class="relative w-full h-screen overflow-hidden group mt-[70px]">
+        <div class="swiper-container h-full w-full">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide relative w-full h-full">
+                    <div class="absolute inset-0 bg-cover bg-center transform scale-105 transition-transform duration-10000 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80');"></div>
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center text-center text-white">
+                        <div class="max-w-3xl p-8 z-10 transform transition-all duration-500 hover:scale-105">
+                            <h2 class="text-5xl md:text-6xl mb-4 font-bold tracking-wide text-gradient hero-text">
+                                <span class="text-primary">Discover</span> India's Rich Heritage
+                            </h2>
+                            <p class="text-xl md:text-2xl mb-8 text-white/90">Explore the ancient temples, monuments, and cultural treasures of India</p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                                <a href="heritage.html" class="px-8 py-4 rounded-full text-lg cursor-pointer bg-gradient-to-r from-primary to-secondary text-white hover:-translate-y-1 hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover-glow">
+                                    Explore Now <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="swiper-slide relative w-full h-full">
+                    <div class="absolute inset-0 bg-cover bg-center transform scale-105" style="background-image: url('https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center text-center text-white">
+                        <div class="max-w-3xl p-8 z-10">
+                            <h2 class="text-4xl md:text-5xl mb-4 font-bold tracking-wide gradient-text animate-fade-in">Experience Vibrant Culture</h2>
+                            <p class="text-xl md:text-2xl mb-8 animate-fade-in">Immerse yourself in the diverse traditions and festivals of India</p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                                <a href="heritage.html" class="px-6 py-3 md:px-8 md:py-4 rounded text-lg cursor-pointer bg-gradient-to-r from-primary to-secondary text-white hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+                                    Explore Now <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="swiper-slide relative w-full h-full">
+                    <div class="absolute inset-0 bg-cover bg-center transform scale-105" style="background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80');"></div>
+                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center text-center text-white">
+                        <div class="max-w-3xl p-8 z-10">
+                            <h2 class="text-4xl md:text-5xl mb-4 font-bold tracking-wide gradient-text animate-fade-in">Journey Through History</h2>
+                            <p class="text-xl md:text-2xl mb-8 animate-fade-in">Walk through the pages of India's glorious past</p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                                <a href="heritage.html" class="px-6 py-3 md:px-8 md:py-4 rounded text-lg cursor-pointer bg-gradient-to-r from-primary to-secondary text-white hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+                                    Explore Now <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- Add Navigation -->
+            <div class="swiper-button-next text-secondary hover:text-primary transition-colors hover:scale-105"></div>
+            <div class="swiper-button-prev text-secondary hover:text-primary transition-colors hover:scale-105"></div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Interactive Stats Section -->
+        <section class="mb-16 bg-gradient-to-r from-dark to-darker rounded-2xl p-12 shadow-2xl text-white glass-effect transform hover:scale-[1.02] transition-all duration-500 hover-glow">
+            <h2 class="text-4xl font-bold mb-12 text-center text-gradient">
+                <span class="text-primary">India</span> in Numbers
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center p-8 stats-card rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 glass-effect hover:-translate-y-2 transform hover:scale-105 card-hover">
+                    <div class="text-5xl font-bold text-primary mb-3 animate-floating" data-target="40">0</div>
+                    <div class="text-white/90 text-lg">UNESCO World Heritage Sites</div>
+                </div>
+                <div class="text-center p-8 stats-card rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 glass-effect hover:-translate-y-2 transform hover:scale-105 card-hover">
+                    <div class="text-5xl font-bold text-primary mb-3 animate-floating" data-target="2000">0</div>
+                    <div class="text-white/90 text-lg">Years of Recorded History</div>
+                </div>
+                <div class="text-center p-8 stats-card rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 glass-effect hover:-translate-y-2 transform hover:scale-105 card-hover">
+                    <div class="text-5xl font-bold text-primary mb-3 animate-floating" data-target="22">0</div>
+                    <div class="text-white/90 text-lg">Official Languages</div>
+                </div>
+                <div class="text-center p-8 stats-card rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 glass-effect hover:-translate-y-2 transform hover:scale-105 card-hover">
+                    <div class="text-5xl font-bold text-primary mb-3 animate-floating" data-target="100">0</div>
+                    <div class="text-white/90 text-lg">Major Festivals Yearly</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <!-- <div class="p-8 bg-white rounded-xl shadow-xl transform transition-all duration-300 hover:-translate-y-2 modern-card group card-hover">
+                <div class="w-20 h-20 feature-icon rounded-full flex items-center justify-center mb-6 mx-auto animate-floating group-hover:scale-110 transition-transform shine-effect">
+                    <i class="fas fa-landmark text-4xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-center text-gradient">Historical Sites</h3>
+                <p class="text-gray-600 text-center mb-6">Explore ancient monuments and architectural wonders that tell the story of India's glorious past.</p>
+                <div class="mt-4 text-center">
+                     <button onclick="window.location.href='heritage.html'" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1 hover-glow cursor-pointer">
+                        <i class="fas fa-external-link-alt mr-2"></i> Explore
+                    </button>
+                </div>
+            </div> -->
+            <div class="p-6 bg-white rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 card-border">
+                <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mb-4 mx-auto animate-floating">
+                    <i class="fas fa-music text-3xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-center gradient-text">Historical Sites</h3>
+                <p class="text-gray-600 text-center">Explore ancient monuments and architectural wonders that tell the story of India's glorious past.</p>
+                <div class="mt-4 text-center">
+                    <a href="heritage.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1 hover-glow">
+                        <i class="fas fa-external-link-alt mr-2"></i> Explore
+                    </a>
+                </div>
+            </div>
+
+            <div class="p-6 bg-white rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 card-border">
+                <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mb-4 mx-auto animate-floating">
+                    <i class="fas fa-music text-3xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-center gradient-text">Cultural Events</h3>
+                <p class="text-gray-600 text-center">Experience traditional music, dance forms, and festivals that showcase India's vibrant diversity.</p>
+                <div class="mt-4 text-center">
+                    <a href="culture.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1 hover-glow">
+                        <i class="fas fa-external-link-alt mr-2"></i> Discover
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Cultural Events -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Upcoming Cultural Events</h2>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden glass-effect">
+                <div class="flex border-b">
+                    <button class="event-tab py-4 px-6 font-medium text-gray-600 hover:text-secondary transition-colors border-b-2 border-transparent hover:border-secondary active-tab hover:-translate-y-1" data-tab="festivals">Festivals</button>
+                    <button class="event-tab py-4 px-6 font-medium text-gray-600 hover:text-secondary transition-colors border-b-2 border-transparent hover:border-secondary hover:-translate-y-1" data-tab="exhibitions">Exhibitions</button>
+                    <button class="event-tab py-4 px-6 font-medium text-gray-600 hover:text-secondary transition-colors border-b-2 border-transparent hover:border-secondary hover:-translate-y-1" data-tab="performances">Performances</button>
+                </div>
+                
+                <div class="p-6">
+                    <!-- Festivals Tab Content -->
+                    <div class="tab-content" id="festivals-tab">
+                        <div class="space-y-6">
+                            <div class="flex flex-col md:flex-row items-start gap-6 bg-gradient-to-r from-dark/5 to-darker/5 p-6 rounded-lg hover:from-dark/10 hover:to-darker/10 transition-colors card-border card-hover">
+                                <div class="text-center bg-white p-4 rounded-lg shadow-sm min-w-[100px] glass-effect">
+                                    <span class="block text-2xl font-bold text-secondary animate-floating">12</span>
+                                    <span class="block text-gray-600 uppercase text-sm">May</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-xl font-bold mb-2 gradient-text">Buddha Purnima</h3>
+                                    <p class="text-gray-600 mb-2">A sacred Buddhist festival celebrating the birth, enlightenment, and death of Gautama Buddha, marked by prayers, meditation, and acts of kindness.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col md:flex-row items-start gap-6 bg-gradient-to-r from-dark/5 to-darker/5 p-6 rounded-lg hover:from-dark/10 hover:to-darker/10 transition-colors card-border card-hover">
+                                <div class="text-center bg-white p-4 rounded-lg shadow-sm min-w-[100px] glass-effect">
+                                    <span class="block text-2xl font-bold text-secondary animate-floating">18</span>
+                                    <span class="block text-gray-600 uppercase text-sm">Oct</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-xl font-bold mb-2 gradient-text">Diwali Festival</h3>
+                                    <p class="text-gray-600 mb-2">The festival of lights celebrated across India with lamps, fireworks, and sweets, symbolizing the victory of light over darkness.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Exhibitions Tab Content -->
+                    <div class="tab-content hidden" id="exhibitions-tab">
+                        <div class="space-y-6">
+                            <div class="flex flex-col md:flex-row items-start gap-6 bg-gradient-to-r from-dark/5 to-darker/5 p-6 rounded-lg hover:from-dark/10 hover:to-darker/10 transition-colors card-border card-hover">
+                                <div class="text-center bg-white p-4 rounded-lg shadow-sm min-w-[100px] glass-effect">
+                                    <span class="block text-2xl font-bold text-secondary animate-floating">20</span>
+                                    <span class="block text-gray-600 uppercase text-sm">Dec</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-xl font-bold mb-2 gradient-text">Indian Art Fair</h3>
+                                    <p class="text-gray-600 mb-2">A premier modern and contemporary art fair showcasing works from leading Indian and international galleries.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row items-start gap-6 bg-gradient-to-r from-dark/5 to-darker/5 p-6 rounded-lg hover:from-dark/10 hover:to-darker/10 transition-colors card-border card-hover">
+                                <div class="text-center bg-white p-4 rounded-lg shadow-sm min-w-[100px] glass-effect">
+                                    <span class="block text-2xl font-bold text-secondary animate-floating">5</span>
+                                    <span class="block text-gray-600 uppercase text-sm">Feb</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-xl font-bold mb-2 gradient-text">Heritage Photography Exhibition</h3>
+                                    <p class="text-gray-600 mb-2">A stunning collection of photographs capturing India's architectural wonders and cultural heritage.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Performances Tab Content -->
+                    <div class="tab-content hidden" id="performances-tab">
+                        <div class="space-y-6">
+                            <div class="flex flex-col md:flex-row items-start gap-6 bg-gradient-to-r from-dark/5 to-darker/5 p-6 rounded-lg hover:from-dark/10 hover:to-darker/10 transition-colors card-border card-hover">
+                                <div class="text-center bg-white p-4 rounded-lg shadow-sm min-w-[100px] glass-effect">
+                                    <span class="block text-2xl font-bold text-secondary animate-floating">8</span>
+                                    <span class="block text-gray-600 uppercase text-sm">Jan</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-xl font-bold mb-2 gradient-text">Kathakali Performance</h3>
+                                    <p class="text-gray-600 mb-2">Traditional Kathakali dance-drama performance featuring elaborate costumes and makeup.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col md:flex-row items-start gap-6 bg-gradient-to-r from-dark/5 to-darker/5 p-6 rounded-lg hover:from-dark/10 hover:to-darker/10 transition-colors card-border card-hover">
+                                <div class="text-center bg-white p-4 rounded-lg shadow-sm min-w-[100px] glass-effect">
+                                    <span class="block text-2xl font-bold text-secondary animate-floating">15</span>
+                                    <span class="block text-gray-600 uppercase text-sm">Feb</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="text-xl font-bold mb-2 gradient-text">Classical Music Festival</h3>
+                                    <p class="text-gray-600 mb-2">A celebration of Indian classical music featuring renowned artists from across the country.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-4 right-4 bg-gradient-to-r from-primary to-secondary text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity hidden z-50 hover:-translate-y-1">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed bottom-20 right-4 bg-gradient-to-r from-dark to-darker text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity z-50 hover:-translate-y-1">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-dark to-darker text-white py-12 glass-effect">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-landmark text-2xl mr-2 animate-floating"></i> <span class="gradient-text">DEKHOINDIA</span>
+                    </h3>
+                    <p class="text-gray-300 mb-4">Exploring the rich heritage and vibrant culture of India.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="heritage.html" class="text-gray-400 hover:text-white transition-colors">Heritage Sites</a></li>
+                        <li><a href="culture.html" class="text-gray-400 hover:text-white transition-colors">Cultural Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Travel Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Photo Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Government Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.incredibleindia.org/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Incredible India</a></li>
+                        <li><a href="https://tourism.gov.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Tourism</a></li>
+                        <li><a href="https://www.indiaculture.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Culture</a></li>
+                        <li><a href="https://asi.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Archaeological Survey</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> New Delhi, India</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> +91 1234567890</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> info@dekhoindia.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2023 DEKHOINDIA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const line1 = document.getElementById('line1');
+            const line2 = document.getElementById('line2');
+            const line3 = document.getElementById('line3');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('animate-fadeInDown');
+                
+                // Hamburger animation
+                line1.classList.toggle('rotate-45');
+                line1.classList.toggle('translate-y-1.5');
+                line2.classList.toggle('opacity-0');
+                line3.classList.toggle('-rotate-45');
+                line3.classList.toggle('-translate-y-1.5');
+            });
+
+            // Hero Slider
+            const heroSwiper = new Swiper('.swiper-container', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+
+            // Destinations Slider
+            const destinationsSwiper = new Swiper('.destinations-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                navigation: {
+                    nextEl: '.destinations-next',
+                    prevEl: '.destinations-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                },
+                autoplay: false,
+                loop: false
+            });
+
+            // Counter Animation
+            const counters = document.querySelectorAll('[data-target]');
+            const speed = 200;
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCounter, 1);
+                } else {
+                    counter.innerText = target;
+                }
+                
+                function updateCounter() {
+                    const count = +counter.innerText;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCounter, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                }
+            });
+
+            // Event Tabs
+            const eventTabs = document.querySelectorAll('.event-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            eventTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    eventTabs.forEach(t => t.classList.remove('active-tab', 'border-secondary', 'text-secondary'));
+                    // Add active class to clicked tab
+                    this.classList.add('active-tab', 'border-secondary', 'text-secondary');
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    // Show selected tab content
+                    const tabId = this.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
+            });
+
+            // Initialize first tab as active
+            eventTabs[0].classList.add('active-tab', 'border-secondary', 'text-secondary');
+
+            // Save Button Interaction
+            const saveButtons = document.querySelectorAll('.save-btn');
+            saveButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas', 'text-yellow-500');
+                        this.innerHTML = '<i class="fas fa-bookmark text-yellow-500"></i> Saved';
+                    } else {
+                        icon.classList.remove('fas', 'text-yellow-500');
+                        icon.classList.add('far');
+                        this.innerHTML = '<i class="far fa-bookmark"></i> Save';
+                    }
+                });
+            });
+
+            // Back to Top Button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('hidden');
+                } else {
+                    backToTopButton.classList.add('hidden');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('bg-gray-900');
+                body.classList.toggle('text-white');
+                
+                const icon = this.querySelector('i');
+                if (body.classList.contains('bg-gray-900')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+
+            // Check login status
+            fetch('check_login.php')
+                .then(response => response.json())
+                .then(data => {
+                    const loginNav = document.getElementById('loginNav');
+                    const profileNav = document.getElementById('profileNav');
+                    const profileUsername = document.getElementById('profileUsername');
+                    const mobileLoginNav = document.getElementById('mobileLoginNav');
+                    const mobileProfileNav = document.getElementById('mobileProfileNav');
+                    const mobileProfileUsername = document.getElementById('mobileProfileUsername');
+                    
+                    if (data.loggedin) {
+                        loginNav.classList.add('hidden');
+                        profileNav.classList.remove('hidden');
+                        profileUsername.textContent = data.username;
+                        mobileLoginNav.classList.add('hidden');
+                        mobileProfileNav.classList.remove('hidden');
+                        mobileProfileUsername.textContent = data.username;
+                    } else {
+                        loginNav.classList.remove('hidden');
+                        profileNav.classList.add('hidden');
+                        mobileLoginNav.classList.remove('hidden');
+                        mobileProfileNav.classList.add('hidden');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+
+            // Check login status on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                updateLoginStatus();
+            });
+
+            // Check login status every 3 seconds
+            setInterval(updateLoginStatus, 3000);
+        });
+    </script>
+</body>
+</html>

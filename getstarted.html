@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started - Indian Heritage & Culture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4B2B',
+                        secondary: '#FF416C',
+                        dark: '#1A1A1A',
+                        darker: '#333333',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'shine': 'shine 3s infinite',
+                        'pulse': 'pulse 2s infinite',
+                        'bounce': 'bounce 1.2s infinite',
+                        'typewriter': 'typewriter 3s steps(40) forwards',
+                        'blink-caret': 'blink-caret 0.7s step-end infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'tilt': 'tilt 10s infinite linear',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-100%) rotate(30deg)' },
+                            '100%': { transform: 'translateX(100%) rotate(30deg)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' },
+                        },
+                        bounce: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-18px)' },
+                        },
+                        typewriter: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' },
+                        },
+                        'blink-caret': {
+                            '0%, 100%': { borderColor: 'transparent' },
+                            '50%': { borderColor: 'currentColor' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        tilt: {
+                            '0%, 50%, 100%': { transform: 'rotate(0deg)' },
+                            '25%': { transform: 'rotate(1deg)' },
+                            '75%': { transform: 'rotate(-1deg)' },
+                        }
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .floating-icons {
+            position: absolute;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 0;
+        }
+        
+        .heritage-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .heritage-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .tooltip {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .heritage-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .interactive-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .interactive-card:hover {
+            transform: perspective(1000px) rotateY(5deg) rotateX(5deg) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .btn-3d {
+            transition: all 0.2s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-3d:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-3d:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-step {
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step:hover .step-number {
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        .step-number {
+            transition: all 0.3s ease;
+        }
+
+        #typewriter::after {
+            content: '|';
+            animation: blink-caret 0.7s step-end infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 overflow-x-hidden">
+    <!-- Website Name Heading -->
+    <div class="text-center py-6 bg-gradient-to-r from-gray-900 to-black">
+        <h1 class="text-4xl md:text-5xl font-bold text-white tracking-wider animate-fade-in">
+            DEKHO<span class="text-primary">INDIA</span>
+        </h1>
+        <p class="text-gray-400 text-sm md:text-base mt-2">Discover India's Rich Heritage & Culture</p>
+    </div>
+
+    <!-- Animated Background with Interactive Icons -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <svg class="w-full h-full">
+            <circle class="animate-pulse" cx="15%" cy="20%" r="60" fill="#e0e7ef" fill-opacity="0.5">
+                <animate attributeName="cy" values="20%;30%;20%" dur="6s" repeatCount="indefinite" />
+            </circle>
+            <circle class="animate-pulse" cx="80%" cy="70%" r="90" fill="#d1e3fa" fill-opacity="0.4">
+                <animate attributeName="cy" values="70%;60%;70%" dur="7s" repeatCount="indefinite" />
+            </circle>
+            <circle class="animate-pulse" cx="50%" cy="50%" r="40" fill="#f9e7d2" fill-opacity="0.3">
+                <animate attributeName="cx" values="50%;60%;50%" dur="8s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+        <div class="absolute w-32 h-32 rounded-full bg-blue-400/20 left-[5vw] top-[10vh] animate-float"></div>
+        <div class="absolute w-24 h-24 rounded-full bg-orange-400/20 left-[80vw] top-[20vh] animate-float delay-500"></div>
+        <div class="absolute w-16 h-16 rounded-full bg-pink-400/20 left-[60vw] top-[70vh] animate-float delay-1000"></div>
+        <div class="absolute w-28 h-28 rounded-full bg-teal-400/20 left-[20vw] top-[80vh] animate-float delay-1500"></div>
+        
+        <!-- Interactive Heritage Icons -->
+        <div class="floating-icons pointer-events-auto" style="top: 20%; left: 10%;" data-icon="taj-mahal">
+            <div class="heritage-icon text-yellow-500 animate-wiggle" aria-label="Taj Mahal">
+                <i class="fas fa-monument"></i>
+                <span class="tooltip">Taj Mahal</span>
+            </div>
+        </div>
+        <div class="floating-icons pointer-events-auto" style="top: 30%; left: 80%;" data-icon="yoga">
+            <div class="heritage-icon text-green-500 animate-wiggle" aria-label="Yoga">
+                <i class="fas fa-spa"></i>
+                <span class="tooltip">Yoga</span>
+            </div>
+        </div>
+        <div class="floating-icons pointer-events-auto" style="top: 70%; left: 15%;" data-icon="spices">
+            <div class="heritage-icon text-red-500 animate-wiggle" aria-label="Spices">
+                <i class="fas fa-mortar-pestle"></i>
+                <span class="tooltip">Spices</span>
+            </div>
+        </div>
+        <div class="floating-icons pointer-events-auto" style="top: 60%; left: 75%;" data-icon="festival">
+            <div class="heritage-icon text-purple-500 animate-wiggle" aria-label="Festivals">
+                <i class="fas fa-mask"></i>
+                <span class="tooltip">Festivals</span>
+            </div>
+        </div>
+        <div class="floating-icons pointer-events-auto" style="top: 40%; left: 50%;" data-icon="music">
+            <div class="heritage-icon text-blue-500 animate-wiggle" aria-label="Music">
+                <i class="fas fa-music"></i>
+                <span class="tooltip">Music</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="w-full max-w-3xl mx-auto mt-16 mb-4 flex justify-center items-center gap-2 relative z-10">
+        <div class="progress-step group">
+            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-primary border-2 border-primary shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl active" aria-label="Step 1">
+                <span class="step-number">1</span>
+            </div>
+        </div>
+        <div class="flex-1 h-1 bg-gradient-to-r from-primary to-secondary rounded"></div>
+        <div class="progress-step group">
+            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-primary border-2 border-primary shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl" aria-label="Step 2">
+                <span class="step-number">2</span>
+            </div>
+        </div>
+        <div class="flex-1 h-1 bg-gradient-to-r from-primary to-secondary rounded"></div>
+        <div class="progress-step group">
+            <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-primary border-2 border-primary shadow-lg cursor-pointer transition-all duration-300 hover:shadow-xl" aria-label="Step 3">
+                <span class="step-number">3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex justify-center items-center min-h-[70vh] my-4 relative z-10">
+        <div class="interactive-card flex flex-col md:flex-row bg-white rounded-3xl shadow-xl border border-gray-100 max-w-4xl w-full min-h-[350px] overflow-hidden animate-fade-in animate-tilt">
+            <div class="flex-1 bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-10 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-orange-100/20 to-pink-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <i class="fas fa-hands-sparkles text-6xl text-orange-400 filter drop-shadow-lg animate-bounce group-hover:animate-none group-hover:scale-125 transition-transform duration-300"></i>
+                <div class="absolute bottom-4 left-0 right-0 text-center text-gray-400 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    Click on floating icons to explore Indian heritage
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col justify-center p-10">
+                <div class="text-4xl font-bold text-gray-800 mb-2 overflow-hidden whitespace-nowrap border-r-2 border-primary" id="typewriter"></div>
+                <div class="text-primary text-lg mb-3">Your journey to explore India's wonders begins here!</div>
+                <div class="text-pink-500 italic text-lg mb-6 transition-opacity duration-500" id="quoteCarousel"></div>
+                <p class="text-gray-600 text-lg mb-8">Discover the stories, traditions, and vibrant culture that make India unique. Whether you're a history buff, a culture lover, or just curious, there's something here for everyone.<br><br>Click below to get started!</p>
+                <div class="flex flex-col space-y-4">
+                    <a href="login.php" class="btn-3d bg-gradient-to-r from-primary to-secondary text-white py-4 px-8 rounded-full text-xl font-bold cursor-pointer relative overflow-hidden group" aria-label="Login to continue">
+                        <span class="relative z-10">Login to Continue</span>
+                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cultural Elements Gallery -->
+    <div id="culturalGallery" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-500">
+        <div class="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative">
+            <button id="closeGallery" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl" aria-label="Close gallery">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-3xl font-bold mb-6 text-center gradient-text" id="galleryTitle">Indian Heritage</h2>
+            <div class="grid grid-cols-2 gap-4" id="galleryContent"></div>
+        </div>
+    </div>
+
+    <!-- Progress Modal -->
+    <div id="progressModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-500">
+        <div class="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative">
+            <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-3xl font-bold mb-6 text-center gradient-text" id="modalTitle"></h2>
+            <div id="modalContent" class="text-gray-600"></div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="fixed bottom-5 right-5 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center cursor-pointer opacity-0 invisible transition-all duration-300 hover:bg-secondary hover:scale-110 shadow-lg" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <script>
+        // Session Check
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('test_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedin) {
+                        window.location.href = 'index.html';
+                    }
+                });
+        });
+
+        // Typewriter Effect
+        const typewriterPhrases = [
+            'Welcome to Indian Heritage & Culture',
+            'Explore the Wonders of India',
+            'Discover a Land of Diversity'
+        ];
+        let phraseIndex = 0;
+        let twIndex = 0;
+        const typewriterElement = document.getElementById('typewriter');
+        function typeWriter() {
+            const currentPhrase = typewriterPhrases[phraseIndex];
+            if (twIndex <= currentPhrase.length) {
+                typewriterElement.textContent = currentPhrase.substring(0, twIndex);
+                twIndex++;
+                setTimeout(typeWriter, 100);
+            } else {
+                setTimeout(() => {
+                    twIndex = 0;
+                    phraseIndex = (phraseIndex + 1) % typewriterPhrases.length;
+                    typeWriter();
+                }, 2000);
+            }
+        }
+        typeWriter();
+
+        // Quote Carousel
+        const quotes = [
+            {text: "India is not a country, it's a world in itself.", author: "- Anonymous"},
+            {text: "The land of diversity, culture, and heritage.", author: "- Unknown"},
+            {text: "Where every state is a country in itself.", author: "- Travel Enthusiast"},
+            {text: "A land where history meets modernity.", author: "- Historian"}
+        ];
+        let quoteIndex = 0;
+        const quoteElement = document.getElementById('quoteCarousel');
+        function changeQuote() {
+            quoteElement.style.opacity = 0;
+            setTimeout(() => {
+                quoteElement.innerHTML = `"${quotes[quoteIndex].text}" <br><span class="text-sm text-gray-500">${quotes[quoteIndex].author}</span>`;
+                quoteElement.style.opacity = 1;
+                quoteIndex = (quoteIndex + 1) % quotes.length;
+            }, 500);
+        }
+        changeQuote();
+        setInterval(changeQuote, 5000);
+
+        // Touch Gestures for Quote Carousel
+        let touchStartX = 0;
+        let touchEndX = 0;
+        quoteElement.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        quoteElement.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                quoteIndex = (quoteIndex + 1) % quotes.length;
+                changeQuote();
+            } else if (touchEndX - touchStartX > 50) {
+                quoteIndex = (quoteIndex - 1 + quotes.length) % quotes.length;
+                changeQuote();
+            }
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('invisible', 'opacity-0');
+            } else {
+                backToTopButton.classList.add('invisible', 'opacity-0');
+            }
+        });
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Floating Icons Animation
+        const icons = document.querySelectorAll('.floating-icons');
+        icons.forEach((icon, index) => {
+            setTimeout(() => {
+                icon.style.opacity = '1';
+                icon.style.pointerEvents = 'auto';
+            }, index * 200);
+        });
+
+        // Cultural Gallery Data
+        const galleryData = {
+            'taj-mahal': {
+                title: 'Taj Mahal',
+                content: `
+                    <div class="col-span-2">
+                        <img src="https://images.unsplash.com/photo-1564507592333-c78f4f0d89cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="w-full rounded-lg mb-4" alt="Taj Mahal">
+                        <p class="text-gray-600">The Taj Mahal, a UNESCO World Heritage Site, is an iconic symbol of love built by Emperor Shah Jahan for his wife Mumtaz Mahal.</p>
+                    </div>
+                `
+            },
+            'yoga': {
+                title: 'Yoga',
+                content: `
+                    <div class="col-span-2">
+                        <img src="https://images.unsplash.com/photo-1603984362497-0a7f2c311d2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="w-full rounded-lg mb-4" alt="Yoga">
+                        <p class="text-gray-600">Yoga, originating in ancient India, is a practice of physical, mental, and spiritual disciplines aimed at achieving harmony.</p>
+                    </div>
+                `
+            },
+            'spices': {
+                title: 'Indian Spices',
+                content: `
+                    <div class="col-span-2">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="w-full rounded-lg mb-4" alt="Spices">
+                        <p class="text-gray-600">Indian cuisine is renowned for its vibrant spices, including turmeric, cumin, and cardamom, which add flavor and health benefits.</p>
+                    </div>
+                `
+            },
+            'festival': {
+                title: 'Indian Festivals',
+                content: `
+                    <div class="col-span-2">
+                        <img src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="w-full rounded-lg mb-4" alt="Festivals">
+                        <p class="text-gray-600">Festivals like Diwali, Holi, and Durga Puja celebrate India's rich cultural diversity with lights, colors, and devotion.</p>
+                    </div>
+                `
+            },
+            'music': {
+                title: 'Indian Music',
+                content: `
+                    <div class="col-span-2">
+                        <img src="https://images.unsplash.com/photo-1611599953568-32eddeed08de?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" class="w-full rounded-lg mb-4" alt="Music">
+                        <p class="text-gray-600">Indian music, from classical ragas to Bollywood hits, reflects the country's diverse traditions and emotions.</p>
+                    </div>
+                `
+            }
+        };
+
+        // Cultural Gallery Interaction
+        const culturalGallery = document.getElementById('culturalGallery');
+        const galleryTitle = document.getElementById('galleryTitle');
+        const galleryContent = document.getElementById('galleryContent');
+        const closeGalleryBtn = document.getElementById('closeGallery');
+        icons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const iconType = icon.dataset.icon;
+                const data = galleryData[iconType];
+                galleryTitle.textContent = data.title;
+                galleryContent.innerHTML = data.content;
+                culturalGallery.classList.remove('hidden');
+                setTimeout(() => {
+                    culturalGallery.style.opacity = '1';
+                }, 10);
+            });
+        });
+        closeGalleryBtn.addEventListener('click', () => {
+            culturalGallery.style.opacity = '0';
+            setTimeout(() => {
+                culturalGallery.classList.add('hidden');
+            }, 500);
+        });
+
+        // Progress Modal Data
+        const progressData = {
+            1: {
+                title: 'Discover India',
+                content: 'Begin your journey by exploring India’s diverse landscapes, from the Himalayas to the beaches of Goa.'
+            },
+            2: {
+                title: 'Learn Traditions',
+                content: 'Dive into the rich traditions, from classical dance forms like Bharatanatyam to intricate art like Madhubani.'
+            },
+            3: {
+                title: 'Celebrate Culture',
+                content: 'Join the vibrant celebrations of India’s festivals and savor its culinary delights.'
+            }
+        };
+
+        // Progress Modal Interaction
+        const progressModal = document.getElementById('progressModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+        const closeModalBtn = document.getElementById('closeModal');
+        document.querySelectorAll('.progress-step').forEach((step, index) => {
+            step.addEventListener('click', () => {
+                const stepNumber = index + 1;
+                const data = progressData[stepNumber];
+                modalTitle.textContent = data.title;
+                modalContent.textContent = data.content;
+                progressModal.classList.remove('hidden');
+                setTimeout(() => {
+                    progressModal.style.opacity = '1';
+                }, 10);
+            });
+        });
+        closeModalBtn.addEventListener('click', () => {
+            progressModal.style.opacity = '0';
+            setTimeout(() => {
+                progressModal.classList.add('hidden');
+            }, 500);
+        });
+
+        // Parallax Effect on Card
+        const interactiveCard = document.querySelector('.interactive-card');
+        interactiveCard.addEventListener('mousemove', (e) => {
+            const rect = interactiveCard.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const rotateX = y / 50;
+            const rotateY = -x / 50;
+            interactiveCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        interactiveCard.addEventListener('mouseleave', () => {
+            interactiveCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+
+        // Button Hover Effect
+        document.querySelectorAll('.btn-3d').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-3px)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

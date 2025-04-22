@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage - DEKHOINDIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4B2B',
+                        secondary: '#FF416C',
+                        dark: '#1A1A1A',
+                        darker: '#333333',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'shine': 'shine 3s infinite',
+                        'pulse': 'pulse 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-100%) rotate(30deg)' },
+                            '100%': { transform: 'translateX(100%) rotate(30deg)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-border {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #FF4B2B, #FF416C) border-box;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-dark to-darker shadow-lg z-50 h-[70px] transition-all duration-300 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer transition-all duration-300 group hover:scale-105">
+                <i class="fas fa-landmark text-2xl text-secondary group-hover:rotate-12 transition-transform animate-floating"></i>
+                <h1 class="text-xl text-white font-bold m-0 gradient-text">DEKHOINDIA</h1>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-2 hover:scale-105">
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line1"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300" id="line2"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line3"></span>
+            </button>
+
+            <ul id="navLinks" class="hidden md:flex gap-6 list-none m-0 p-0 h-full items-center">
+                <li><a href="index.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Home</a></li>
+                <li><a href="heritage.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Heritage</a></li>
+                <li><a href="culture.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Culture</a></li>
+                <li><a href="about.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">About</a></li>
+                <li><a href="contact.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Contact</a></li>
+                <li id="loginNav"><a href="login.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Login</a></li>
+                <li id="profileNav" class="hidden">
+                    <div class="relative group">
+                        <button class="flex items-center text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            <span id="profileUsername"></span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block">
+                            <a href="profile.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                            <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- <div id="searchContainer" class="hidden md:flex items-center gap-2">
+                <input type="text" id="searchInput" placeholder="Search..." class="px-4 py-2 border border-secondary/20 rounded outline-none transition-all duration-300 bg-white/10 text-white w-44 placeholder:text-white/70 focus:border-secondary/50 focus:w-48 glass-effect hover:-translate-y-1">
+                <button id="searchButton" class="bg-secondary/20 text-white border-none px-4 py-2 rounded cursor-pointer transition-all duration-300 hover:bg-secondary/30 glass-effect hover:-translate-y-1">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div> -->
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-[70px] left-0 w-full bg-dark shadow-lg z-40 hidden transition-all duration-300 transform origin-top">
+        <div class="flex flex-col p-4 space-y-2">
+            <a href="index.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Home</a>
+            <a href="heritage.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Heritage</a>
+            <a href="culture.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Culture</a>
+            <a href="about.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">About</a>
+            <a href="contact.php" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Contact</a>
+            <a href="login.php" id="mobileLoginNav" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Login</a>
+            <div id="mobileProfileNav" class="hidden">
+                <div class="text-white px-4 py-2">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="mobileProfileUsername"></span>
+                </div>
+                <a href="profile.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Profile</a>
+                <a href="logout.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Logout</a>
+            </div>
+            <div class="flex items-center gap-2 mt-2">
+                <input type="text" placeholder="Search..." class="px-4 py-2 border border-secondary/20 rounded outline-none bg-white/10 text-white w-full placeholder:text-white/70">
+                <button class="bg-secondary/20 text-white border-none px-4 py-2 rounded cursor-pointer hover:bg-secondary/30">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="relative w-full h-[60vh] overflow-hidden mt-[70px]">
+        <div class="absolute inset-0 bg-cover bg-center transform scale-105" style="background-image: url('https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 flex items-center justify-center text-center text-white">
+            <div class="max-w-3xl p-8 z-10">
+                <h1 class="text-4xl md:text-5xl mb-4 font-bold tracking-wide gradient-text animate-fade-in">India's Heritage Sites</h1>
+                <p class="text-xl md:text-2xl mb-8 animate-fade-in">Explore the ancient monuments, temples, and architectural wonders that tell the story of India's glorious past</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Heritage Categories -->
+        <!-- <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Heritage Categories</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 card-border">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Monuments" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 gradient-text">Monuments</h3>
+                        <p class="text-gray-600 mb-4">Explore iconic monuments like the Taj Mahal, Red Fort, and Qutub Minar that showcase India's architectural brilliance.</p>
+                        <a href="#" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                            Explore
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 card-border">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80" alt="Temples" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 gradient-text">Temples</h3>
+                        <p class="text-gray-600 mb-4">Discover ancient temples like Khajuraho, Konark Sun Temple, and Meenakshi Temple that reflect India's spiritual heritage.</p>
+                        <a href="#" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                            Explore
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 card-border">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Forts" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 gradient-text">Forts</h3>
+                        <p class="text-gray-600 mb-4">Visit majestic forts like Amber Fort, Mehrangarh Fort, and Gwalior Fort that stand as testaments to India's military history.</p>
+                        <a href="#" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                            Explore
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- UNESCO World Heritage Sites -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">UNESCO World Heritage Sites</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8 glass-effect">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 gradient-text">Cultural Heritage Sites</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Taj Mahal</span>
+                                    <p class="text-gray-600 text-sm">A stunning white marble mausoleum in Agra, built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Red Fort</span>
+                                    <p class="text-gray-600 text-sm">A historic fort in Delhi that served as the main residence of Mughal emperors for nearly 200 years.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Khajuraho Group of Monuments</span>
+                                    <p class="text-gray-600 text-sm">A group of Hindu and Jain temples known for their intricate sculptures and architectural excellence.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Hampi</span>
+                                    <p class="text-gray-600 text-sm">The last capital of the great Vijayanagara Empire, featuring stunning ruins and temples.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 gradient-text">Natural Heritage Sites</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Kaziranga National Park</span>
+                                    <p class="text-gray-600 text-sm">Home to the world's largest population of one-horned rhinoceroses and diverse wildlife.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Sundarbans</span>
+                                    <p class="text-gray-600 text-sm">The largest mangrove forest in the world, home to the Bengal tiger and diverse marine life.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Western Ghats</span>
+                                    <p class="text-gray-600 text-sm">A mountain range with exceptional biodiversity and unique ecosystems.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Great Himalayan National Park</span>
+                                    <p class="text-gray-600 text-sm">A protected area in the western Himalayas with diverse flora and fauna.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Heritage Sites -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Featured Heritage Sites</h2>
+            <div class="swiper-container featured-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Featured Site 1 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col card-borderhttps hover:-translate-y-2 transition-all duration-300">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="red fort.jpeg" alt="Red Fort" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                <div class="absolute top-4 right-4 bg-white/90 text-secondary px-3 py-1 rounded-full text-sm font-semibold glass-effect">
+                                    <i class="fas fa-star text-primary mr-1"></i> 4.7
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold mb-2 gradient-text">Red Fort</h3>
+                                <p class="text-gray-600 mb-4 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-secondary mr-2"></i> Delhi
+                                </p>
+                                <p class="text-gray-600 mb-4">A historic fort that served as the main residence of Mughal emperors, now a UNESCO World Heritage Site.</p>
+                                <div class="flex justify-between items-center">
+                                    <a href="../destinations/red-fort.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                                        Explore
+                                    </a>
+                                    <button class="text-secondary hover:text-primary transition-colors save-btn hover:-translate-y-1" data-id="1">
+                                        <i class="far fa-bookmark"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured Site 2 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col card-border hover:-translate-y-2 transition-all duration-300">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80" alt="Taj Mahal" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                <div class="absolute top-4 right-4 bg-white/90 text-secondary px-3 py-1 rounded-full text-sm font-semibold glass-effect">
+                                    <i class="fas fa-star text-primary mr-1"></i> 4.9
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold mb-2 gradient-text">Taj Mahal</h3>
+                                <p class="text-gray-600 mb-4 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-secondary mr-2"></i> Agra
+                                </p>
+                                <p class="text-gray-600 mb-4">A stunning white marble mausoleum built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.</p>
+                                <div class="flex justify-between items-center">
+                                    <a href="../destinations/taj-mahal.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                                        Explore
+                                    </a>
+                                    <button class="text-secondary hover:text-primary transition-colors save-btn hover:-translate-y-1" data-id="2">
+                                        <i class="far fa-bookmark"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured Site 3 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col card-border hover:-translate-y-2 transition-all duration-300">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="khajuro.jpg" alt="Khajuraho" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                <div class="absolute top-4 right-4 bg-white/90 text-secondary px-3 py-1 rounded-full text-sm font-semibold glass-effect">
+                                    <i class="fas fa-star text-primary mr-1"></i> 4.6
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold mb-2 gradient-text">Khajuraho Temples</h3>
+                                <p class="text-gray-600 mb-4 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-secondary mr-2"></i> Madhya Pradesh
+                                </p>
+                                <p class="text-gray-600 mb-4">A group of Hindu and Jain temples known for their intricate sculptures and architectural excellence.</p>
+                                <div class="flex justify-between items-center">
+                                    <a href="../destinations/khajuraho.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                                        Explore
+                                    </a>
+                                    <button class="text-secondary hover:text-primary transition-colors save-btn hover:-translate-y-1" data-id="3">
+                                        <i class="far fa-bookmark"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next text-secondary hover:text-primary transition-colors hover:scale-105"></div>
+                <div class="swiper-button-prev text-secondary hover:text-primary transition-colors hover:scale-105"></div>
+            </div>
+        </section>
+
+        <!-- Heritage Timeline -->
+        <!-- <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Heritage Timeline</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8 glass-effect">
+                <div class="relative">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary"></div>
+                    <div class="space-y-8">
+                        <div class="relative pl-8">
+                            <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary transform -translate-x-1/2"></div>
+                            <div class="bg-white/50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h3 class="text-xl font-bold mb-1 gradient-text">Indus Valley Civilization (3300-1300 BCE)</h3>
+                                <p class="text-gray-600">One of the world's oldest civilizations, known for its advanced urban planning, drainage systems, and architecture.</p>
+                            </div>
+                        </div>
+                        <div class="relative pl-8">
+                            <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary transform -translate-x-1/2"></div>
+                            <div class="bg-white/50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h3 class="text-xl font-bold mb-1 gradient-text">Maurya Empire (322-185 BCE)</h3>
+                                <p class="text-gray-600">Under Emperor Ashoka, the empire saw the construction of pillars, stupas, and rock edicts that spread Buddhist teachings.</p>
+                            </div>
+                        </div>
+                        <div class="relative pl-8">
+                            <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary transform -translate-x-1/2"></div>
+                            <div class="bg-white/50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h3 class="text-xl font-bold mb-1 gradient-text">Gupta Empire (320-550 CE)</h3>
+                                <p class="text-gray-600">Known as the "Golden Age of India," this period saw advancements in art, architecture, science, and literature.</p>
+                            </div>
+                        </div>
+                        <div class="relative pl-8">
+                            <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary transform -translate-x-1/2"></div>
+                            <div class="bg-white/50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h3 class="text-xl font-bold mb-1 gradient-text">Delhi Sultanate (1206-1526)</h3>
+                                <p class="text-gray-600">Introduced Indo-Islamic architecture, including the Qutub Minar and various mosques and tombs.</p>
+                            </div>
+                        </div>
+                        <div class="relative pl-8">
+                            <div class="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary transform -translate-x-1/2"></div>
+                            <div class="bg-white/50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <h3 class="text-xl font-bold mb-1 gradient-text">Mughal Empire (1526-1857)</h3>
+                                <p class="text-gray-600">Created iconic monuments like the Taj Mahal, Red Fort, and Humayun's Tomb, blending Persian, Turkish, and Indian architectural styles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Heritage Conservation -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Heritage Conservation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-8 glass-effect">
+                    <h3 class="text-xl font-bold mb-4 gradient-text">Conservation Efforts</h3>
+                    <p class="text-gray-600 mb-4">India has implemented various conservation programs to protect its heritage sites from natural decay, pollution, and human activities.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Archaeological Survey of India (ASI)</span>
+                                <p class="text-gray-600 text-sm">The primary organization responsible for the conservation and maintenance of heritage sites.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Adopt a Heritage Scheme</span>
+                                <p class="text-gray-600 text-sm">A government initiative to involve private and public sector companies in the maintenance and development of heritage sites.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Digital Documentation</span>
+                                <p class="text-gray-600 text-sm">Using 3D scanning and digital mapping to create detailed records of heritage structures for future conservation.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-8 glass-effect">
+                    <h3 class="text-xl font-bold mb-4 gradient-text">How You Can Help</h3>
+                    <p class="text-gray-600 mb-4">There are several ways you can contribute to the preservation of India's heritage:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-holding-heart text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Responsible Tourism</span>
+                                <p class="text-gray-600 text-sm">Follow guidelines, avoid touching artifacts, and respect the sanctity of heritage sites.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-holding-heart text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Volunteer Programs</span>
+                                <p class="text-gray-600 text-sm">Participate in conservation programs and awareness campaigns organized by heritage organizations.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-holding-heart text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Support Heritage Organizations</span>
+                                <p class="text-gray-600 text-sm">Donate to organizations working towards heritage conservation and restoration.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-dark to-darker text-white py-12 glass-effect">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-landmark text-2xl mr-2 animate-floating"></i> <span class="gradient-text">DEKHOINDIA</span>
+                    </h3>
+                    <p class="text-gray-300 mb-4">Exploring the rich heritage and vibrant culture of India.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="heritage.html" class="text-gray-400 hover:text-white transition-colors">Heritage Sites</a></li>
+                        <li><a href="culture.html" class="text-gray-400 hover:text-white transition-colors">Cultural Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Travel Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Photo Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Government Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.incredibleindia.org/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Incredible India</a></li>
+                        <li><a href="https://tourism.gov.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Tourism</a></li>
+                        <li><a href="https://www.indiaculture.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Culture</a></li>
+                        <li><a href="https://asi.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Archaeological Survey</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> New Delhi, India</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> +91 1234567890</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> info@dekhoindia.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2023 DEKHOINDIA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-4 right-4 bg-gradient-to-r from-primary to-secondary text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity hidden z-50 hover:-translate-y-1">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed bottom-20 right-4 bg-gradient-to-r from-dark to-darker text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity z-50 hover:-translate-y-1">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const line1 = document.getElementById('line1');
+            const line2 = document.getElementById('line2');
+            const line3 = document.getElementById('line3');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('animate-fadeInDown');
+                
+                // Hamburger animation
+                line1.classList.toggle('rotate-45');
+                line1.classList.toggle('translate-y-1.5');
+                line2.classList.toggle('opacity-0');
+                line3.classList.toggle('-rotate-45');
+                line3.classList.toggle('-translate-y-1.5');
+            });
+
+            // Featured Sites Slider
+            const featuredSwiper = new Swiper('.featured-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                }
+            });
+
+            // Save Button Interaction
+            const saveButtons = document.querySelectorAll('.save-btn');
+            saveButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas', 'text-yellow-500');
+                        this.innerHTML = '<i class="fas fa-bookmark text-yellow-500"></i> Saved';
+                    } else {
+                        icon.classList.remove('fas', 'text-yellow-500');
+                        icon.classList.add('far');
+                        this.innerHTML = '<i class="far fa-bookmark"></i> Save';
+                    }
+                });
+            });
+
+            // Back to Top Button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('hidden');
+                } else {
+                    backToTopButton.classList.add('hidden');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('bg-gray-900');
+                body.classList.toggle('text-white');
+                
+                const icon = this.querySelector('i');
+                if (body.classList.contains('bg-gray-900')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+
+            // Check login status
+            fetch('check_login.php')
+                .then(response => response.json())
+                .then(data => {
+                    const loginNav = document.getElementById('loginNav');
+                    const profileNav = document.getElementById('profileNav');
+                    const profileUsername = document.getElementById('profileUsername');
+                    const mobileLoginNav = document.getElementById('mobileLoginNav');
+                    const mobileProfileNav = document.getElementById('mobileProfileNav');
+                    const mobileProfileUsername = document.getElementById('mobileProfileUsername');
+                    
+                    if (data.loggedin) {
+                        loginNav.classList.add('hidden');
+                        profileNav.classList.remove('hidden');
+                        profileUsername.textContent = data.username;
+                        mobileLoginNav.classList.add('hidden');
+                        mobileProfileNav.classList.remove('hidden');
+                        mobileProfileUsername.textContent = data.username;
+                    } else {
+                        loginNav.classList.remove('hidden');
+                        profileNav.classList.add('hidden');
+                        mobileLoginNav.classList.remove('hidden');
+                        mobileProfileNav.classList.add('hidden');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html> 

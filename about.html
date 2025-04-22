@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - DEKHOINDIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4B2B',
+                        secondary: '#FF416C',
+                        dark: '#1A1A1A',
+                        darker: '#333333',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'pulse': 'pulse 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen font-sans">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-dark to-darker shadow-xl z-50 h-[70px] glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer transition-transform duration-300 hover:scale-105">
+                <i class="fas fa-landmark text-2xl text-secondary animate-floating"></i>
+                <h1 class="text-xl font-bold gradient-text">DEKHOINDIA</h1>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-2 hover:scale-105">
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line1"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300" id="line2"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line3"></span>
+            </button>
+
+            <ul id="navLinks" class="hidden md:flex gap-6 list-none m-0 p-0 h-full items-center">
+                <li><a href="index.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/20 transition-all duration-300">Home</a></li>
+                <li><a href="heritage.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/20 transition-all duration-300">Heritage</a></li>
+                <li><a href="culture.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/20 transition-all duration-300">Culture</a></li>
+                <li><a href="about.html" class="nav-link text-white font-medium px-4 py-2 rounded bg-secondary/30 transition-all duration-300">About</a></li>
+                <li><a href="contact.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/20 transition-all duration-300">Contact</a></li>
+                <li id="loginNav"><a href="login.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/20 transition-all duration-300">Login</a></li>
+                <li id="profileNav" class="hidden">
+                    <div class="relative group">
+                        <button class="flex items-center text-white font-medium px-4 py-2 rounded hover:bg-secondary/20 transition-all duration-300">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            <span id="profileUsername"></span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden group-hover:block">
+                            <a href="profile.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                            <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-[70px] left-0 w-full bg-dark shadow-lg z-40 hidden transition-all duration-300">
+        <div class="flex flex-col p-4 space-y-2">
+            <a href="index.html" class="text-white px-4 py-2 rounded hover:bg-secondary/20 transition-all">Home</a>
+            <a href="heritage.html" class="text-white px-4 py-2 rounded hover:bg-secondary/20 transition-all">Heritage</a>
+            <a href="culture.html" class="text-white px-4 py-2 rounded hover:bg-secondary/20 transition-all">Culture</a>
+            <a href="about.html" class="text-white px-4 py-2 rounded bg-secondary/30 transition-all">About</a>
+            <a href="contact.php" class="text-white px-4 py-2 rounded hover:bg-secondary/20 transition-all">Contact</a>
+            <a href="login.php" id="mobileLoginNav" class="text-white px-4 py-2 rounded hover:bg-secondary/20 transition-all">Login</a>
+            <div id="mobileProfileNav" class="hidden">
+                <div class="text-white px-4 py-2">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="mobileProfileUsername"></span>
+                </div>
+                <a href="profile.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/20 transition-all">Profile</a>
+                <a href="logout.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/20 transition-all">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="about-hero relative bg-cover bg-center h-96 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756fd5583');">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark/80 to-darker/80"></div>
+            <div class="about-content relative text-center text-white max-w-3xl mx-auto px-4 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">About DEKHOINDIA</h2>
+                <p class="text-lg md:text-xl">Discover the rich tapestry of India's heritage and culture through our immersive platform.</p>
+            </div>
+        </section>
+
+        <!-- Mission & Vision Section -->
+        <section class="mission-vision py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="mission-card bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                    <i class="fas fa-bullseye text-4xl text-primary mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Our Mission</h3>
+                    <p class="text-gray-600">To preserve and promote India's rich cultural heritage by providing a comprehensive platform for exploration and education.</p>
+                </div>
+                <div class="vision-card bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                    <i class="fas fa-eye text-4xl text-secondary mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Our Vision</h3>
+                    <p class="text-gray-600">To become the leading digital platform for Indian heritage and culture, connecting people with their roots and traditions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        
+
+        <!-- Values Section -->
+        <section class="values py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 gradient-text">Our Values</h2>
+            <div class="values-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="value-card bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                    <i class="fas fa-hands-helping text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Preservation</h3>
+                    <p class="text-gray-600">Protecting and conserving India's cultural heritage for future generations.</p>
+                </div>
+                <div class="value-card bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                    <i class="fas fa-book text-4xl text-secondary mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Education</h3>
+                    <p class="text-gray-600">Promoting awareness and understanding of Indian culture.</p>
+                </div>
+                <div class="value-card bg-white rounded-xl shadow-lg p-8 text-center hover:shadow-xl transition-shadow duration-300">
+                    <i class="fas fa-users text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Community</h3>
+                    <p class="text-gray-600">Building a community of cultural enthusiasts and experts.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-dark to-darker text-white py-12 glass-effect">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-landmark text-2xl mr-2 animate-floating"></i> <span class="gradient-text">DEKHOINDIA</span>
+                    </h3>
+                    <p class="text-gray-300 mb-4">Exploring the rich heritage and vibrant culture of India.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="heritage.html" class="text-gray-400 hover:text-white transition-colors">Heritage Sites</a></li>
+                        <li><a href="culture.html" class="text-gray-400 hover:text-white transition-colors">Cultural Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Travel Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Photo Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Government Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.incredibleindia.org/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Incredible India</a></li>
+                        <li><a href="https://tourism.gov.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Tourism</a></li>
+                        <li><a href="https://www.indiaculture.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Culture</a></li>
+                        <li><a href="https://asi.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Archaeological Survey</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> New Delhi, India</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> +91 1234567890</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> info@dekhoindia.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>© 2023 DEKHOINDIA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-4 right-4 bg-gradient-to-r from-primary to-secondary text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity hidden z-50 hover:-translate-y-1">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed bottom-20 right-4 bg-gradient-to-r from-dark to-darker text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity z-50 hover:-translate-y-1">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const line1 = document.getElementById('line1');
+            const line2 = document.getElementById('line2');
+            const line3 = document.getElementById('line3');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('animate-fadeInDown');
+                
+                // Hamburger animation
+                line1.classList.toggle('rotate-45');
+                line1.classList.toggle('translate-y-1.5');
+                line2.classList.toggle('opacity-0');
+                line3.classList.toggle('-rotate-45');
+                line3.classList.toggle('-translate-y-1.5');
+            });
+
+            // Back to Top Button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('hidden');
+                } else {
+                    backToTopButton.classList.add('hidden');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('bg-gray-900');
+                body.classList.toggle('text-white');
+                
+                const icon = this.querySelector('i');
+                if (body.classList.contains('bg-gray-900')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+
+            // Check login status
+            fetch('check_login.php')
+                .then(response => response.json())
+                .then(data => {
+                    const loginNav = document.getElementById('loginNav');
+                    const profileNav = document.getElementById('profileNav');
+                    const profileUsername = document.getElementById('profileUsername');
+                    const mobileLoginNav = document.getElementById('mobileLoginNav');
+                    const mobileProfileNav = document.getElementById('mobileProfileNav');
+                    const mobileProfileUsername = document.getElementById('mobileProfileUsername');
+                    
+                    if (data.loggedin) {
+                        loginNav.classList.add('hidden');
+                        profileNav.classList.remove('hidden');
+                        profileUsername.textContent = data.username;
+                        mobileLoginNav.classList.add('hidden');
+                        mobileProfileNav.classList.remove('hidden');
+                        mobileProfileUsername.textContent = data.username;
+                    } else {
+                        loginNav.classList.remove('hidden');
+                        profileNav.classList.add('hidden');
+                        mobileLoginNav.classList.remove('hidden');
+                        mobileProfileNav.classList.add('hidden');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

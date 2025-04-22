@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture - DEKHOINDIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4B2B',
+                        secondary: '#FF416C',
+                        dark: '#1A1A1A',
+                        darker: '#333333',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'shine': 'shine 3s infinite',
+                        'pulse': 'pulse 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shine: {
+                            '0%': { transform: 'translateX(-100%) rotate(30deg)' },
+                            '100%': { transform: 'translateX(100%) rotate(30deg)' },
+                        },
+                        pulse: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.05)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF4B2B, #FF416C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-border {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #FF4B2B, #FF416C) border-box;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-dark to-darker shadow-lg z-50 h-[70px] transition-all duration-300 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer transition-all duration-300 group hover:scale-105">
+                <i class="fas fa-landmark text-2xl text-secondary group-hover:rotate-12 transition-transform animate-floating"></i>
+                <h1 class="text-xl text-white font-bold m-0 gradient-text">DEKHOINDIA</h1>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-2 hover:scale-105">
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line1"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300" id="line2"></span>
+                <span class="block w-6 h-0.5 bg-secondary transition-all duration-300 transform" id="line3"></span>
+            </button>
+
+            <ul id="navLinks" class="hidden md:flex gap-6 list-none m-0 p-0 h-full items-center">
+                <li><a href="index.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Home</a></li>
+                <li><a href="heritage.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Heritage</a></li>
+                <li><a href="culture.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Culture</a></li>
+                <li><a href="about.html" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">About</a></li>
+                <li><a href="contact.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Contact</a></li>
+                <li id="loginNav"><a href="login.php" class="nav-link text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">Login</a></li>
+                <li id="profileNav" class="hidden">
+                    <div class="relative group">
+                        <button class="flex items-center text-white font-medium px-4 py-2 rounded hover:bg-secondary/10 transition-all duration-300">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            <span id="profileUsername"></span>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block">
+                            <a href="profile.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                            <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- <div id="searchContainer" class="hidden md:flex items-center gap-2">
+                <input type="text" id="searchInput" placeholder="Search..." class="px-4 py-2 border border-secondary/20 rounded outline-none transition-all duration-300 bg-white/10 text-white w-44 placeholder:text-white/70 focus:border-secondary/50 focus:w-48 glass-effect hover:-translate-y-1">
+                <button id="searchButton" class="bg-secondary/20 text-white border-none px-4 py-2 rounded cursor-pointer transition-all duration-300 hover:bg-secondary/30 glass-effect hover:-translate-y-1">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div> -->
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-[70px] left-0 w-full bg-dark shadow-lg z-40 hidden transition-all duration-300 transform origin-top">
+        <div class="flex flex-col p-4 space-y-2">
+            <a href="index.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Home</a>
+            <a href="heritage.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Heritage</a>
+            <a href="culture.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Culture</a>
+            <a href="about.html" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">About</a>
+            <a href="contact.php" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Contact</a>
+            <a href="login.php" id="mobileLoginNav" class="text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Login</a>
+            <div id="mobileProfileNav" class="hidden">
+                <div class="text-white px-4 py-2">
+                    <i class="fas fa-user-circle mr-2"></i>
+                    <span id="mobileProfileUsername"></span>
+                </div>
+                <a href="profile.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Profile</a>
+                <a href="logout.php" class="block text-white px-4 py-2 rounded hover:bg-secondary/10 transition-all">Logout</a>
+            </div>
+            <!-- <div class="flex items-center gap-2 mt-2">
+                <input type="text" placeholder="Search..." class="px-4 py-2 border border-secondary/20 rounded outline-none bg-white/10 text-white w-full placeholder:text-white/70">
+                <button class="bg-secondary/20 text-white border-none px-4 py-2 rounded cursor-pointer hover:bg-secondary/30">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="relative w-full h-[60vh] overflow-hidden mt-[70px]">
+        <div class="absolute inset-0 bg-cover bg-center transform scale-105" style="background-image: url('Diwali.webp');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 flex items-center justify-center text-center text-white">
+            <div class="max-w-3xl p-8 z-10">
+                <h1 class="text-4xl md:text-5xl mb-4 font-bold tracking-wide gradient-text animate-fade-in">Indian Culture</h1>
+                <p class="text-xl md:text-2xl mb-8 animate-fade-in">Discover the vibrant traditions, arts, and customs that make India a cultural paradise</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Traditional Arts -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Traditional Arts</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8 glass-effect">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 gradient-text">Visual Arts</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-palette text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Madhubani Painting</span>
+                                    <p class="text-gray-600 text-sm">A traditional folk art from Bihar, known for its vibrant colors and geometric patterns.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-palette text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Warli Art</span>
+                                    <p class="text-gray-600 text-sm">A tribal art form from Maharashtra, characterized by simple geometric shapes and scenes of daily life.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-palette text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Kalamkari</span>
+                                    <p class="text-gray-600 text-sm">A traditional art form from Andhra Pradesh, featuring hand-painted or block-printed textiles.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-palette text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Rangoli</span>
+                                    <p class="text-gray-600 text-sm">A decorative art form created on floors using colored powders, rice, or flower petals.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 gradient-text">Performing Arts</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-theater-masks text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Kathakali</span>
+                                    <p class="text-gray-600 text-sm">A classical dance-drama from Kerala, known for its elaborate costumes and facial expressions.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-theater-masks text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Yakshagana</span>
+                                    <p class="text-gray-600 text-sm">A traditional theater form from Karnataka, combining dance, music, and drama.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-theater-masks text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Puppetry</span>
+                                    <p class="text-gray-600 text-sm">Various forms of traditional puppetry like Kathputli, Bommalattam, and Tholpavakoothu.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-theater-masks text-secondary mt-1 mr-3"></i>
+                                <div>
+                                    <span class="font-medium">Folk Theater</span>
+                                    <p class="text-gray-600 text-sm">Traditional forms like Jatra, Tamasha, and Nautanki that tell stories through music and drama.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Cultural Events -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Featured Cultural Events</h2>
+            <div class="swiper-container featured-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Event 1 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col card-border hover:-translate-y-2 transition-all duration-300">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="Diwali.webp" alt="Diwali" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                <div class="absolute top-4 right-4 bg-white/90 text-secondary px-3 py-1 rounded-full text-sm font-semibold glass-effect">
+                                    <i class="fas fa-calendar text-primary mr-1"></i> Oct-Nov
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold mb-2 gradient-text">Diwali Festival</h3>
+                                <p class="text-gray-600 mb-4 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-secondary mr-2"></i> Nationwide
+                                </p>
+                                <p class="text-gray-600 mb-4">The Festival of Lights, celebrating the victory of light over darkness and good over evil.</p>
+                                <div class="flex justify-between items-center">
+                                    <a href="festivals/diwali.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                                        Learn More
+                                    </a>
+                                    <button class="text-secondary hover:text-primary transition-colors save-btn hover:-translate-y-1" data-id="1">
+                                        <i class="far fa-bookmark"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col card-border hover:-translate-y-2 transition-all duration-300">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="holi.jpg" alt="Holi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                <div class="absolute top-4 right-4 bg-white/90 text-secondary px-3 py-1 rounded-full text-sm font-semibold glass-effect">
+                                    <i class="fas fa-calendar text-primary mr-1"></i> March
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold mb-2 gradient-text">Holi Festival</h3>
+                                <p class="text-gray-600 mb-4 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-secondary mr-2"></i> Nationwide
+                                </p>
+                                <p class="text-gray-600 mb-4">The Festival of Colors, celebrating the arrival of spring and the triumph of good over evil.</p>
+                                <div class="flex justify-between items-center">
+                                    <a href="festivals/holi.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                                        Learn More
+                                    </a>
+                                    <button class="text-secondary hover:text-primary transition-colors save-btn hover:-translate-y-1" data-id="2">
+                                        <i class="far fa-bookmark"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event 3 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col card-border hover:-translate-y-2 transition-all duration-300">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="onam.jpg" alt="Onam" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                <div class="absolute top-4 right-4 bg-white/90 text-secondary px-3 py-1 rounded-full text-sm font-semibold glass-effect">
+                                    <i class="fas fa-calendar text-primary mr-1"></i> Aug-Sep
+                                </div>
+                            </div>
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold mb-2 gradient-text">Onam Festival</h3>
+                                <p class="text-gray-600 mb-4 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-secondary mr-2"></i> Kerala
+                                </p>
+                                <p class="text-gray-600 mb-4">A harvest festival celebrating the homecoming of King Mahabali, featuring boat races and flower arrangements.</p>
+                                <div class="flex justify-between items-center">
+                                    <a href="festivals/onam.html" class="inline-block px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded hover:opacity-90 transition-opacity hover:-translate-y-1">
+                                        Learn More
+                                    </a>
+                                    <button class="text-secondary hover:text-primary transition-colors save-btn hover:-translate-y-1" data-id="3">
+                                        <i class="far fa-bookmark"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event 4 - Buddha Purnima -->
+                    
+
+                    <!-- Event 5 - Raksha Bandhan -->
+                    
+
+                    
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next text-secondary hover:text-primary transition-colors hover:scale-105"></div>
+                <div class="swiper-button-prev text-secondary hover:text-primary transition-colors hover:scale-105"></div>
+            </div>
+        </section>
+
+        <!-- Cultural Heritage -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Cultural Heritage</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-8 glass-effect">
+                    <h3 class="text-xl font-bold mb-4 gradient-text">Languages & Literature</h3>
+                    <p class="text-gray-600 mb-4">India is home to hundreds of languages and a rich literary tradition spanning thousands of years.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-book text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Classical Languages</span>
+                                <p class="text-gray-600 text-sm">Sanskrit, Tamil, Telugu, Kannada, Malayalam, and Odia are recognized as classical languages.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-book text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Epic Literature</span>
+                                <p class="text-gray-600 text-sm">The Mahabharata and Ramayana are among the world's longest epic poems.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-book text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Modern Literature</span>
+                                <p class="text-gray-600 text-sm">Contemporary Indian literature in various languages has gained international recognition.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-8 glass-effect">
+                    <h3 class="text-xl font-bold mb-4 gradient-text">Cuisine</h3>
+                    <p class="text-gray-600 mb-4">Indian cuisine is known for its diverse flavors, spices, and cooking techniques.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-utensils text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Regional Varieties</span>
+                                <p class="text-gray-600 text-sm">Each region has its unique culinary traditions and specialties.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-utensils text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Street Food</span>
+                                <p class="text-gray-600 text-sm">Vibrant street food culture offering diverse flavors and quick bites.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-utensils text-secondary mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">Festival Foods</span>
+                                <p class="text-gray-600 text-sm">Special dishes prepared during festivals and celebrations.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-dark to-darker text-white py-12 glass-effect">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-landmark text-2xl mr-2 animate-floating"></i> <span class="gradient-text">DEKHOINDIA</span>
+                    </h3>
+                    <p class="text-gray-300 mb-4">Exploring the rich heritage and vibrant culture of India.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-gray-300 hover:text-secondary transition-colors hover:-translate-y-1"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="heritage.html" class="text-gray-400 hover:text-white transition-colors">Heritage Sites</a></li>
+                        <li><a href="culture.html" class="text-gray-400 hover:text-white transition-colors">Cultural Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Travel Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Photo Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Government Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.incredibleindia.org/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Incredible India</a></li>
+                        <li><a href="https://tourism.gov.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Tourism</a></li>
+                        <li><a href="https://www.indiaculture.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Ministry of Culture</a></li>
+                        <li><a href="https://asi.nic.in/" target="_blank" class="text-gray-400 hover:text-white transition-colors">Archaeological Survey</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> New Delhi, India</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> +91 1234567890</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> info@dekhoindia.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2023 DEKHOINDIA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-4 right-4 bg-gradient-to-r from-primary to-secondary text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity hidden z-50 hover:-translate-y-1">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed bottom-20 right-4 bg-gradient-to-r from-dark to-darker text-white p-3 rounded-full shadow-lg hover:opacity-90 transition-opacity z-50 hover:-translate-y-1">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const line1 = document.getElementById('line1');
+            const line2 = document.getElementById('line2');
+            const line3 = document.getElementById('line3');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('animate-fadeInDown');
+                
+                // Hamburger animation
+                line1.classList.toggle('rotate-45');
+                line1.classList.toggle('translate-y-1.5');
+                line2.classList.toggle('opacity-0');
+                line3.classList.toggle('-rotate-45');
+                line3.classList.toggle('-translate-y-1.5');
+            });
+
+            // Featured Events Slider
+            const featuredSwiper = new Swiper('.featured-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                }
+            });
+
+            // Save Button Interaction
+            const saveButtons = document.querySelectorAll('.save-btn');
+            saveButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas', 'text-yellow-500');
+                        this.innerHTML = '<i class="fas fa-bookmark text-yellow-500"></i> Saved';
+                    } else {
+                        icon.classList.remove('fas', 'text-yellow-500');
+                        icon.classList.add('far');
+                        this.innerHTML = '<i class="far fa-bookmark"></i> Save';
+                    }
+                });
+            });
+
+            // Back to Top Button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('hidden');
+                } else {
+                    backToTopButton.classList.add('hidden');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('bg-gray-900');
+                body.classList.toggle('text-white');
+                
+                const icon = this.querySelector('i');
+                if (body.classList.contains('bg-gray-900')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+
+            // Check login status
+            fetch('check_login.php')
+                .then(response => response.json())
+                .then(data => {
+                    const loginNav = document.getElementById('loginNav');
+                    const profileNav = document.getElementById('profileNav');
+                    const profileUsername = document.getElementById('profileUsername');
+                    const mobileLoginNav = document.getElementById('mobileLoginNav');
+                    const mobileProfileNav = document.getElementById('mobileProfileNav');
+                    const mobileProfileUsername = document.getElementById('mobileProfileUsername');
+                    
+                    if (data.loggedin) {
+                        loginNav.classList.add('hidden');
+                        profileNav.classList.remove('hidden');
+                        profileUsername.textContent = data.username;
+                        mobileLoginNav.classList.add('hidden');
+                        mobileProfileNav.classList.remove('hidden');
+                        mobileProfileUsername.textContent = data.username;
+                    } else {
+                        loginNav.classList.remove('hidden');
+                        profileNav.classList.add('hidden');
+                        mobileLoginNav.classList.remove('hidden');
+                        mobileProfileNav.classList.add('hidden');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html> 
